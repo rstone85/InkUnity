@@ -7,7 +7,7 @@ VAR clickCounter = 0
 The alarm buzzes, pulling you from sleep. The scent of coffee fills the air as you prepare for the day ahead. The birds chirping outside your window, a reminder: the early bird gets the worm.  
 You gather your things and head out the door, ready or not, for another day at the office, hoping that today is the day you will meet your deadline and finish the project.  
 
-+ [Head to work.] 
++ [Head to work] 
     ~ clickCounter++
     -> office_morning
 
@@ -23,7 +23,7 @@ You gather your things and head out the door, ready or not, for another day at t
 {dayCounter == 5:  Today is Saturday}
 {dayCounter == 6:  Today is Sunday}
 
-{dayCounter >= 5: //removed the dequence because I couldn't figure out how to assign this
+{dayCounter >= 5: //removed the sequence because I couldn't figure out how to assign this
     You arrive at the office, coffee in hand. 
     The lights are off. The doors are locked.
     It's the weekend. 
@@ -107,7 +107,7 @@ But the conversation is intriguing, so you stay until the hour is over, then hea
 
 === lunch_at_desk ===
     You power through the afternoon, tuning out any distractions that might come up.
-    ~ projectCompleted = true //changed this 
+    ~ projectCompleted = true //changed this to trigger a completed project
     -> afternoon
 
 
@@ -131,8 +131,8 @@ The afternoon slump hits. You struggle to stay focused. Only a few hours are lef
     -> coffee_break
 
 === push_through ===
-You make some progress and are feeling good, however the deadline still looms, and the day is coming to an end.  
--> end_of_day
+You make some progress and are feeling good, however the deadline still looms, and the day is coming to an end.
+    + [You hope you finish in time] -> end_of_day //added this to seperate the text 
 
 === coffee_break ===
 Jennie (the chatty co-worker) happens to be in the break room. She starts talking about how she is finished with her work, which reminds you about the pile of work on your desk.  
@@ -143,7 +143,7 @@ The caffeine kicks in, but you’re still working on the project hoping you have
 === end_of_day ===
 {projectCompleted:
     Your project is finished. You can finally go home feeling satisfied. 
-    Total choices made: {clickCounter} //display counter
+    Total choices needed to finish project: {clickCounter} //display counter
     -> END
 - else:
     You didn’t finish your project. You’ll have to try again tomorrow and make better choices if you want to feel accomplished.  
