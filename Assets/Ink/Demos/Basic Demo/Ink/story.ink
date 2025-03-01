@@ -4,7 +4,7 @@ VAR projectCompleted = false
 VAR dayCounter = 0 // Start on Monday (0 = Monday, 6 = Sunday) instead of sequence
 VAR clickCounter = 0
 
-The alarm buzzes, pulling you from sleep. The scent of coffee fills the air as you prepare for the day ahead. The birds chirping outside your window, a reminder: the early bird gets the worm.  
+The alarm <i>buzzes</i>, pulling you from sleep. The scent of <color=brown>coffee</color> fills the air as you prepare for the day ahead. The birds chirping outside your window, a reminder: the early bird gets the worm.  
 You gather your things and head out the door, ready or not, for another day at the office, hoping that today is the day you will meet your deadline and finish the project.  
 
 + [Head to work] 
@@ -15,22 +15,22 @@ You gather your things and head out the door, ready or not, for another day at t
 ~ projectCompleted = false
 
 // Determine the current day based on dayCounter
-{dayCounter == 0:  Today is Monday}
-{dayCounter == 1:  Today is Tuesday}
-{dayCounter == 2:  Today is Wednesday}
-{dayCounter == 3:  Today is Thursday}
-{dayCounter == 4:  Today is Friday}
-{dayCounter == 5:  Today is Saturday}
-{dayCounter == 6:  Today is Sunday}
+{dayCounter == 0:  Today is <color=red> Monday </color>} //added colors to the different days
+{dayCounter == 1:  Today is <color=blue> Tuesday</color>}
+{dayCounter == 2:  Today is <color=yellow> Wednesday</color>}
+{dayCounter == 3:  Today is <color=brown> Thursday</color>}
+{dayCounter == 4:  Today is <color=purple> Friday </color>}
+{dayCounter == 5:  Today is <color=orange> Saturday </color>}
+{dayCounter == 6:  Today is <color=black> Sunday </color>}
 
 {dayCounter >= 5: //removed the sequence because I couldn't figure out how to assign this
-    You arrive at the office, coffee in hand. 
+    You arrive at the office, <color=brown>coffee</color> in hand. 
     The lights are off. The doors are locked.
-    It's the weekend. 
+    <i>It's the weekend.</i> 
     You think..."How did this happen? What shall I do instead?"
     -> weekend_activities
 - else: 
-    You arrive at the office, coffee in hand. Another day, another project to complete.
+    You arrive at the office, <color=brown>coffee</color> in hand. Another day, another project to complete.
     -> work_choices
 }
 
@@ -47,7 +47,7 @@ You think to yourself... "Where do I start?"
     ~ clickCounter++ 
     -> chat_with_coworker
 + -> //fallback choice
-    Today is the day you are going to make good choices and finally finish the project.
+    Today is the day you are going to make <i>good</i> choices and finally finish the project.
     ~ clickCounter++ 
     -> start_project
 
@@ -60,7 +60,7 @@ It seems that the company is planning a lot of social events that you really don
 === start_project ===
 You sit down and focus on the project. The initial tasks are straightforward, but soon you hit a challenge.  
 
-{~The requirements document is unclear.| The software crashes unexpectedly.|Your supervisor emails asking for an update sooner than expected.}
+{~The requirement for the document is unclear.| The software crashes unexpectedly.|Your supervisor emails asking for an update sooner than expected.}
 
 + [Break down the task into smaller parts] 
     ~ clickCounter++ 
@@ -81,7 +81,9 @@ Thinking you should have broken down the work into smaller tasks, you rethink wh
 -> midday
 
 === chat_with_coworker ===
-Jennie sits down next to you. She starts in on the gossip. As Jennie talks you think about the work you have to get done today and rethink your decision to chat with her.  
+<color=purple>Jennie</color> sits down next to you. She starts in on the gossip. As <color=purple>Jennie</color> talks you think about the work you have to get done today and rethink your decision to chat with her.  
+    + [A Few Moments Later] //This is to be read in the Spongebob narrator voice
+    ~ clickCounter++
 Time flies when you aren't working on the project. You realize you have been talking longer than usual.  
 
 The deadline keeps approaching, and the work isn't done. It's almost the afternoon.  
@@ -114,6 +116,8 @@ But the conversation is intriguing, so you stay until the hour is over, then hea
 === lunch_outside ===
 {projectCompleted:
     Feeling accomplished, you decide to take a quick nap. Unfortunately, you fall asleep and wake up to find the parking lot almost empty.
+    +[Hurry back to your desk] //added extra choice so it didn't go straight to end of day text
+    ~clickCounter++
     -> end_of_day
 - else:
     You take a real break and clear your mind, but lose valuable time.
@@ -134,11 +138,15 @@ The afternoon slump hits. You struggle to stay focused. Only a few hours are lef
 You make some progress and are feeling good, however the deadline still looms, and the day is coming to an end.
     + [You hope you finish in time] -> end_of_day //added this to seperate the text 
 
-=== coffee_break ===
-Jennie (the chatty co-worker) happens to be in the break room. She starts talking about how she is finished with her work, which reminds you about the pile of work on your desk.  
-You drink your coffee as you walk back to your office.  
+=== coffee_break === //Week7 Broke this down further to ease the player needing to read as much on screen
+<color=purple>Jennie</color> (<i>the chatty co-worker</i>) happens to be in the break room. She starts talking about how she is finished with her work, which reminds you about the pile of work on your desk.  
+    + [Drink the coffee]
+    ~ clickCounter++ //wasn't going to add this initially since it was to break up the scene. But a click is a click.
+You drink your <color=brown>coffee</color> as you walk back to your office.  
 The caffeine kicks in, but you’re still working on the project hoping you have enough time as the end of the day nears.  
--> end_of_day
+        ++ [The Day is Over] 
+        ~ clickCounter++ 
+        -> end_of_day
 
 === end_of_day ===
 {projectCompleted:
@@ -146,14 +154,16 @@ The caffeine kicks in, but you’re still working on the project hoping you have
     Total choices needed to finish project: {clickCounter} //display counter
     -> END
 - else:
-    You didn’t finish your project. You’ll have to try again tomorrow and make better choices if you want to feel accomplished.  
+    You didn’t finish your project. You’ll have to try again tomorrow and make <i>better</i> choices if you want to feel accomplished.  
+        + [Go Home]
     ~ projectCompleted = false
     ~ dayCounter = (dayCounter + 1) % 7 // Move to the next day
     -> office_morning
 }
 
 === weekend_activities ===
-"You take the weekend off. Maybe some rest will help you be more productive next week."
+You take the weekend off. 
+    Maybe some rest will help you be more productive next week.
 
 + [Relax at home] 
     ~ clickCounter++ 
